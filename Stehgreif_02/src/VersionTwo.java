@@ -39,7 +39,7 @@ public class VersionTwo {
 		directionIndex = 1;
 		forwardDirection = direction[directionIndex];
 	
-		selectedMaze = deepCopyArray(mazeGen.generateMaze(50, CORRIDOR, WALL, BB8, R2D2));
+		selectedMaze = deepCopyArray(mazeGen.generateMaze(20, CORRIDOR, WALL, BB8, R2D2));
 		traceMap = deepCopyArray(selectedMaze);
 
 
@@ -50,7 +50,7 @@ public class VersionTwo {
 		
 		System.out.println(algorithmTime+" ms");
 		
-		//Just adding a comment for git with ERROR
+	
 
 		
 	}
