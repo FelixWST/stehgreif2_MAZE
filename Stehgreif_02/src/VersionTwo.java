@@ -49,7 +49,8 @@ public class VersionTwo {
 		solveMaze(startingPoint);
 		
 		System.out.println(algorithmTime+" ms");
-	
+		
+		//Just adding a comment for git
 
 		
 	}
