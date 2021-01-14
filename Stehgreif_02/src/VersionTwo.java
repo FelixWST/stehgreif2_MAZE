@@ -57,7 +57,7 @@ public class VersionTwo {
 		endTime=0;
 		
 		
-		//Debug mode with position print etc -> Boolean debug
+		//Debug mode with position print etc -> Boolean debug 
 		
 	}
 		

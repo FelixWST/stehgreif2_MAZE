@@ -53,7 +53,7 @@ public class MazeGenerator {
 	}
 
 	/**
-	 * This Method generates a random maze with a selectable size
+	 * This Method generates a random maze with a chooseable size
 	 * It uses the recursive division algorithm, so there is always a solution
 	 * @param maze			the two Dimensional char array to write the maze to
 	 * @param x				current X Position (0 at initial call)
