@@ -21,7 +21,7 @@ public class VersionTwo {
 	
 	static int stepCounter =0;
 	static int selectedMap =0;
-	static int delay=150;
+	static int delay=200;
 	
 	static char[][]selectedMaze;
 	static char[][]traceMap;
@@ -35,11 +35,12 @@ public class VersionTwo {
 
 	public static void main (String[] args) {
 		
+
 		//Zeitmessung
 		directionIndex = 1;
 		forwardDirection = direction[directionIndex];
 	
-		selectedMaze = deepCopyArray(mazeGen.generateMaze(20, CORRIDOR, WALL, BB8, R2D2));
+		selectedMaze = deepCopyArray(mazeGen.generateMaze(25, CORRIDOR, WALL, BB8, R2D2));
 		traceMap = deepCopyArray(selectedMaze);
 
 
@@ -50,10 +51,17 @@ public class VersionTwo {
 		
 		System.out.println(algorithmTime+" ms");
 		
-	
-
+		directionIndex = 1;
+		stepCounter = 0;
+		startTime=0;
+		endTime=0;
+		
+		
+		//Debug mode with position print etc -> Boolean debug
 		
 	}
+		
+	
 	
 	public static void solveMaze(Point p) {
 		
@@ -80,14 +88,20 @@ public class VersionTwo {
 			
 		}else {
 			selectedMaze[p.y][p.x] = BB8; 
+			 
+			//Clean Console
+			for(int i = 0; i<100; i++) {
+				System.out.println();
+			}
+			
 			printMaze(selectedMaze);
 	
 			algorithmTime = (endTime-startTime)-(stepCounter*delay); 
-			/**
+			
 			System.out.println("Point(x|y): ("+p.x+" | "+p.y+")");
 			System.out.println("Currently Facing "+forwardDirection);
 			System.out.println("Iterations: "+stepCounter);
-			**/
+			
 			if(lookRight(p)!=WALL) {
 				turnRight();
 				moveForward(p);
