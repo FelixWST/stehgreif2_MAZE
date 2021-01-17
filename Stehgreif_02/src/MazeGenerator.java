@@ -1,16 +1,21 @@
 import java.util.Random;
 
+/**
+* MazeGenerator
+* This class is used to generate a maze using the recursive division algorithm.
+*
+* @author Felix Wuest, Max Muthler
+*/
 public class MazeGenerator {
 
 	static Random rnd = new Random();
-	static VersionTwo mazeGame = new VersionTwo();
 
 	public static void main(String[] args) {
 
 	}
 
 	/**
-	 * This Method hast to be initially called to generate a random Maze.
+	 * This Method has to be initially called to generate a random Maze.
 	 * 
 	 * @param size					the size of the generated maze (x=y)
 	 * @param corridor				the symbol used for Corridors
@@ -96,17 +101,13 @@ public class MazeGenerator {
 		
 		
 		//Print the maze in each step for a builing "animation"
-		//Clean Console
-		for(int i = 0; i<100; i++) {
-			System.out.println();
-		}
+		RightHandSolver.clearConsole();
 		System.out.println("Generating your maze...");
-		mazeGame.printMaze(maze);
+		RightHandSolver.printMaze(maze);
 		
 		try {
 			Thread.sleep(150);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
