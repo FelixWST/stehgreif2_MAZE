@@ -52,6 +52,10 @@ public class RightHandSolver {
 	static char[][]selectedMaze;
 	static char[][]traceMap;
 	
+	//GUI
+	static Gui window = new Gui();
+	static Point startingPoint = new Point();
+	static boolean windowMode = false;
 
 	public static void main (String[] args) {
 		
@@ -89,8 +93,9 @@ public class RightHandSolver {
 			userInputInt = StaticScanner.nextInt();
 			
 			while(userInputInt>=MAZE_COUNT || userInputInt<0) {
-				System.out.println("Du kannst nur Labyrinthe zwischen 0 und "+MAZE_COUNT+" waehlen!");
+				System.out.println("\nDu kannst nur Labyrinthe zwischen 0 und "+MAZE_COUNT+" waehlen!");
 				System.out.print("Welches Labyrinth moechtest du auswaehlen?: ");
+				userInputInt = StaticScanner.nextInt();
 			}
 			
 			selectedMaze = deepCopyArray(selectMap(userInputInt));
@@ -112,7 +117,7 @@ public class RightHandSolver {
 		}
 		
 		createTraceMap();
-		Point startingPoint = new Point(findStartingPoint(selectedMaze)[0],findStartingPoint(selectedMaze)[1]);
+		startingPoint = new Point(findStartingPoint(selectedMaze)[0],findStartingPoint(selectedMaze)[1]);
 		
 		
 		System.out.print("\nMoechtest Du das Programm im Debug Modus laufen lassen? (Y/N): ");
@@ -121,7 +126,7 @@ public class RightHandSolver {
 		
 		while(userInputChar != INPUT_YES && userInputChar != INPUT_NO) {
 			System.out.println("Bitte gebe nur Y fuer Ja und N fuer Nein ein!");
-			System.out.println("Möchtest Du das Programm im Debug-Modus laufen lassen? (Y/N): ");
+			System.out.println("Moechtest Du das Programm im Debug-Modus laufen lassen? (Y/N): ");
 			userInputChar = Character.toLowerCase(StaticScanner.nextChar());
 		}
 		
@@ -131,10 +136,27 @@ public class RightHandSolver {
 			delay = delay*2;
 		}
 		
-		startTime = System.currentTimeMillis();
 		
-		if(debug) {
-			System.out.println("Start Time: "+startTime);
+		System.out.print("\nMoechtest Du das Labyrinth zusätzlich im Fenster sehen (BETA) (Y/N): ");
+		userInputChar = Character.toLowerCase(StaticScanner.nextChar());
+		
+		
+		while(userInputChar != INPUT_YES && userInputChar != INPUT_NO) {
+			System.out.println("Bitte gebe nur Y fuer Ja und N fuer Nein ein!");
+			System.out.println("Moechtest Du das Labyrinth zusätzlich im Fenster sehen (BETA) (Y/N): ");
+			userInputChar = Character.toLowerCase(StaticScanner.nextChar());
+		}
+		
+		if(userInputChar == INPUT_YES) {
+			windowMode = true;
+			System.out.println("Okay, der Fenster-Modus (BETA) ist aktiviert!");
+		}
+		
+		startTime = System.currentTimeMillis();
+
+		
+		if(windowMode) {
+			window.open(selectedMaze[0].length, selectedMaze.length);
 		}
 		
 		solveMaze(startingPoint);
@@ -168,7 +190,6 @@ public class RightHandSolver {
 			selectedMaze[p.y][p.x] = BB8;  
 			clearConsole();
 			printMaze(selectedMaze);
-			
 			if(debug) {
 				printStats(p);
 			}
@@ -434,6 +455,7 @@ public class RightHandSolver {
 	 * This method gets called as BB8 found the exit of the maze.
 	 */
 	public static void escaped() {
+		Gui.update = false;
 		System.out.println("\n===================================================");
 		System.out.println("\nBB8 hat zu R2D2 gefunden!!!");
 		System.out.println("Dafuer hat er "+stepCounter+" Schritte benötigt!");
@@ -442,6 +464,7 @@ public class RightHandSolver {
 		System.out.println("\n===================================================");
 		System.out.println("Danke fuer´s spielen!");
 		System.out.println("Dieses Spiel wurde programmiert von Felix Wuest und Max Muthler.");
+		
 	}
 	
 	/**
@@ -473,12 +496,10 @@ public class RightHandSolver {
 	 * @param timeInMillis		time (in ms) to wait
 	 */
 	public static void wait(int timeInMillis) {
-		
 		try {
 			Thread.sleep(timeInMillis);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		
 	}
 }
