@@ -4,7 +4,7 @@ import java.util.Random;
 * MazeGenerator
 * This class is used to generate a maze using the recursive division algorithm.
 *
-* @author Felix Wuest, Max Muthler
+* @author Felix Wuest
 */
 public class MazeGenerator {
 
