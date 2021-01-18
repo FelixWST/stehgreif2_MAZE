@@ -9,6 +9,9 @@ import java.util.Random;
 public class MazeGenerator {
 
 	static Random rnd = new Random();
+	static int delay = 150;
+	static String points = "";
+	static int pointCounter = 0;
 
 	/**
 	 * This Method has to be initially called to generate a random Maze.
@@ -49,6 +52,8 @@ public class MazeGenerator {
 		
 		//Call for the actual random maze generation
 		divide(maze, 0, 0, maze.length - 1, maze[0].length - 1);
+		
+		System.out.println("Labyrinth mit der groesse "+size+" erfolgreich generiert!");
 		
 		return maze;
 	}
@@ -98,14 +103,20 @@ public class MazeGenerator {
 		
 		//Print the maze in each step for a builing "animation"
 		RightHandSolver.clearConsole();
-		System.out.println("Generating your maze...");
+		
+		if(pointCounter<3) {
+			points = points +".";
+			pointCounter++;
+		}else {
+			pointCounter=0;
+			points="";
+		}
+		
+		
+		System.out.println("Labyrinth wird generiert"+points);
 		RightHandSolver.printMaze(maze);
 		
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		RightHandSolver.wait(delay);
 			
 		if (width <= 3 || height <= 3) {
 			return;
