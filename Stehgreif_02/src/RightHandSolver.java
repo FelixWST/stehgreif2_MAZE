@@ -98,6 +98,7 @@ public class RightHandSolver {
 			
 		}else {
 			//Random Maze Generation with size given by User
+		System.out.println("\n### HINWEIS: am besten sehen Labyrinthe mit ungerade groessen aus ###");
 		System.out.print("Welche groesse soll das zufaellig generierte Labyrinth haben? (5-50): ");
 		userInputInt = StaticScanner.nextInt();
 		
@@ -114,7 +115,7 @@ public class RightHandSolver {
 		Point startingPoint = new Point(findStartingPoint(selectedMaze)[0],findStartingPoint(selectedMaze)[1]);
 		
 		
-		System.out.println("Möchtest Du das Programm im Debug Modus laufen lassen? (Y/N): ");
+		System.out.print("\nMoechtest Du das Programm im Debug Modus laufen lassen? (Y/N): ");
 		userInputChar = Character.toLowerCase(StaticScanner.nextChar());
 		
 		
@@ -150,26 +151,19 @@ public class RightHandSolver {
 	public static void solveMaze(Point p) {
 		stepCounter++;
 
-		try {
-			Thread.sleep(delay);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
+		wait(delay);
 		
 		if(selectedMaze[p.y][p.x] == R2D2) {
 			selectedMaze[p.y][p.x] = BB8;
 			traceMap[p.y][p.x] = forwardDirection; 
-			
 			clearConsole();
 			printMaze(selectedMaze);
-			
 			if(debug) {
 				printStats(p);
 			}
-			
+			wait(delay);
+			clearConsole();
 			escaped();
-			
-			
 		}else {
 			selectedMaze[p.y][p.x] = BB8;  
 			clearConsole();
@@ -471,5 +465,20 @@ public class RightHandSolver {
 		System.out.println("Currently Facing "+forwardDirection);
 		System.out.println("Iterations: "+stepCounter);
 		System.out.println("Current Time elapsed: "+algorithmTime+" ms");
+	}
+	
+	/**
+	 * This method can be called to make to thread sleep for a given time (in ms).
+	 * 
+	 * @param timeInMillis		time (in ms) to wait
+	 */
+	public static void wait(int timeInMillis) {
+		
+		try {
+			Thread.sleep(timeInMillis);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 	}
 }
