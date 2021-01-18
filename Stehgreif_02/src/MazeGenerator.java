@@ -10,10 +10,6 @@ public class MazeGenerator {
 
 	static Random rnd = new Random();
 
-	public static void main(String[] args) {
-
-	}
-
 	/**
 	 * This Method has to be initially called to generate a random Maze.
 	 * 

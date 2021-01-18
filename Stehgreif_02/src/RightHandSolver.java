@@ -8,10 +8,6 @@ import java.awt.Point;
 * @author Felix Wuest, Max Muthler
 */
 
-/**
- * @author felix
- *
- */
 public class RightHandSolver {
 	
 	//Directions for TraceMap
