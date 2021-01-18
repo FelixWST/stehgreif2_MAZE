@@ -5,7 +5,7 @@ import java.awt.Point;
 * This class guides the user through the process of BB8 solving a Maze by using the right-hand-rule.
 * The Maze additionally can be generated randomly with the class MazeGenerator.
 *
-* @author Felix Wuest, Max Muthler
+* @author Felix Wuest, Max Muthler, Marvin Wernli
 */
 
 public class RightHandSolver {
@@ -156,7 +156,7 @@ public class RightHandSolver {
 
 		
 		if(windowMode) {
-			window.open(selectedMaze[0].length, selectedMaze.length);
+			window.open(selectedMaze[0].length, selectedMaze.length, 30, 5);
 		}
 		
 		solveMaze(startingPoint);
@@ -174,6 +174,10 @@ public class RightHandSolver {
 		stepCounter++;
 
 		wait(delay);
+		if(windowMode) {
+			//repaint the Window Graphics
+			window.repaint();	
+		}
 		
 		if(selectedMaze[p.y][p.x] == R2D2) {
 			selectedMaze[p.y][p.x] = BB8;
@@ -185,6 +189,8 @@ public class RightHandSolver {
 			}
 			wait(delay);
 			clearConsole();
+			Gui.done=true;
+			window.repaint();
 			escaped();
 		}else {
 			selectedMaze[p.y][p.x] = BB8;  
@@ -455,7 +461,6 @@ public class RightHandSolver {
 	 * This method gets called as BB8 found the exit of the maze.
 	 */
 	public static void escaped() {
-		Gui.update = false;
 		System.out.println("\n===================================================");
 		System.out.println("\nBB8 hat zu R2D2 gefunden!!!");
 		System.out.println("Dafuer hat er "+stepCounter+" Schritte benötigt!");
@@ -463,8 +468,7 @@ public class RightHandSolver {
 		printMaze(traceMap);
 		System.out.println("\n===================================================");
 		System.out.println("Danke fuer´s spielen!");
-		System.out.println("Dieses Spiel wurde programmiert von Felix Wuest und Max Muthler.");
-		
+		System.out.println("Dieses Spiel wurde programmiert von Felix Wuest, Max Muthler und Marvin Wernli.");
 	}
 	
 	/**
