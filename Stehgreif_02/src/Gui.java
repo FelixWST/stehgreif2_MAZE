@@ -20,6 +20,8 @@ public class Gui extends JFrame{
 	static int paddingX = 5;
 	static int fieldSize = 0;
 	static boolean done = false;
+	static boolean traceMap = false;
+	static char traceMaze[][];
 	
 	/**
 	 *This method paints the maze array using rectangles.
@@ -34,7 +36,7 @@ public class Gui extends JFrame{
 			
 			for(int j =0; j<RightHandSolver.selectedMaze[i].length;j++) {
 				
-				
+
 				if(RightHandSolver.selectedMaze[i][j]==RightHandSolver.WALL) {
 					g.setColor(Color.black);
 				}
@@ -51,9 +53,27 @@ public class Gui extends JFrame{
 				if(done&&RightHandSolver.selectedMaze[i][j]==RightHandSolver.BB8) {
 					g.setColor(Color.green);
 				}
-
-				g.fillRect(paddingX+j*fieldSize+j*margin, paddingY+i*fieldSize+i*margin, fieldSize, fieldSize);
 				
+				if(traceMap) {
+					
+					if(RightHandSolver.traceMap[i][j]==RightHandSolver.NORTH||
+					    RightHandSolver.traceMap[i][j]==RightHandSolver.EAST||	
+					    RightHandSolver.traceMap[i][j]==RightHandSolver.SOUTH||
+					    RightHandSolver.traceMap[i][j]==RightHandSolver.WEST){
+						g.setColor(Color.orange);
+					}
+				}
+				
+				int x = paddingX+j*fieldSize+j*margin;
+				int y = paddingY+i*fieldSize+i*margin;
+				
+				g.fillRect(x, y, fieldSize, fieldSize);
+				
+				if(traceMap) {
+					g.setColor(Color.black);
+					 g.drawString(Character.toString(RightHandSolver.traceMap[i][j]), x+(fieldSize/2), y+(fieldSize/2));
+				}
+			
 			}
 		}
 	}
@@ -67,8 +87,8 @@ public class Gui extends JFrame{
 	 * @param margin		space between the tiles
 	 */
 	public void open(int xWidth, int yHeight, int fieldSize, int margin) {
-		this.fieldSize = fieldSize;
-		this.margin = margin;
+		Gui.fieldSize = fieldSize;
+		Gui.margin = margin;
 		
 		//Jframe init
 		setTitle("MazeRunner");
