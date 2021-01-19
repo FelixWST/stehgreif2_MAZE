@@ -9,7 +9,6 @@ import java.util.Random;
 public class MazeGenerator {
 
 	static Random rnd = new Random();
-	static int delay = 150;
 	static String points = "";
 	static int pointCounter = 0;
 
@@ -116,7 +115,7 @@ public class MazeGenerator {
 		System.out.println("Labyrinth wird generiert"+points);
 		RightHandSolver.printMaze(maze);
 		
-		RightHandSolver.wait(delay);
+		RightHandSolver.wait(RightHandSolver.delay/4);
 			
 		if (width <= 3 || height <= 3) {
 			return;

@@ -75,7 +75,7 @@ public class RightHandSolver {
 		
 		while(userInputInt != PREDEFINED_MODE && userInputInt != RANDOM_MODE) {
 			System.out.println("Bitte gebe eine valide Zahl ein!");
-			System.out.println("(1) Waehle entweder eines von drei vorgefertigen Labyrinthen aus...");
+			System.out.println("(1) Waehle entweder eines von 	rei vorgefertigen Labyrinthen aus...");
 			System.out.println("(2) ...oder lasse eins zufaellig generieren!\n");
 			System.out.print("Was ist deine Wahl?: ");
 			userInputInt = StaticScanner.nextInt();
@@ -156,7 +156,7 @@ public class RightHandSolver {
 
 		
 		if(windowMode) {
-			window.open(selectedMaze[0].length, selectedMaze.length, 30, 5);
+			window.open(selectedMaze[0].length, selectedMaze.length);
 		}
 		
 		solveMaze(startingPoint);

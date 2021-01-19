@@ -2,7 +2,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Graphics;
-
 import javax.swing.JFrame;
 
 
@@ -14,14 +13,13 @@ import javax.swing.JFrame;
  */
 public class Gui extends JFrame{
 
-	static int counter = 0;
-	static int margin = 0;
+	static int margin = 5;
 	static int paddingY = 25; 
 	static int paddingX = 5;
 	static int fieldSize = 0;
 	static boolean done = false;
 	static boolean traceMap = false;
-	static char traceMaze[][];
+	static int windowHeight = 800;
 	
 	/**
 	 *This method paints the maze array using rectangles.
@@ -31,6 +29,7 @@ public class Gui extends JFrame{
 	 */
 	@Override
 	public void paint(Graphics g) {
+		
 		
 		for(int i = 0; i<RightHandSolver.selectedMaze.length;i++) {
 			
@@ -56,10 +55,7 @@ public class Gui extends JFrame{
 				
 				if(traceMap) {
 					
-					if(RightHandSolver.traceMap[i][j]==RightHandSolver.NORTH||
-					    RightHandSolver.traceMap[i][j]==RightHandSolver.EAST||	
-					    RightHandSolver.traceMap[i][j]==RightHandSolver.SOUTH||
-					    RightHandSolver.traceMap[i][j]==RightHandSolver.WEST){
+					if(RightHandSolver.traceMap[i][j]!=RightHandSolver.CORRIDOR){
 						g.setColor(Color.orange);
 					}
 				}
@@ -86,10 +82,10 @@ public class Gui extends JFrame{
 	 * @param fieldSize		size of the individual tiles in px
 	 * @param margin		space between the tiles
 	 */
-	public void open(int xWidth, int yHeight, int fieldSize, int margin) {
-		Gui.fieldSize = fieldSize;
-		Gui.margin = margin;
+	public void open(int xWidth, int yHeight) {
 		
+		
+		fieldSize = windowHeight/RightHandSolver.selectedMaze.length;
 		//Jframe init
 		setTitle("MazeRunner");
 		setSize(xWidth*fieldSize+xWidth*margin+paddingX, yHeight*fieldSize+yHeight*margin+paddingY);
