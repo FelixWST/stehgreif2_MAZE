@@ -160,6 +160,7 @@ public class RightHandSolver {
 		}
 		
 		solveMaze(startingPoint);
+		
 	}
 
 	/**
