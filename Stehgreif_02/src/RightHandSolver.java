@@ -161,7 +161,6 @@ public class RightHandSolver {
 		
 		solveMaze(startingPoint);
 	}
-
 	/**
 	 * This method is the main method guiding through the maze solving process
 	 * solveMaze will call itself after each step to make the next step  
