@@ -4,6 +4,7 @@ import java.awt.Point;
 * Stegreifprojekt 2: Das Labyrinth
 * This class guides the user through the process of BB8 solving a Maze by using the right-hand-rule.
 * The Maze additionally can be generated randomly with the class MazeGenerator.
+* With the Gui Class, the solving process can also be displayed in a Gui.
 *
 * @author Felix Wuest, Max Muthler, Marvin Wernli
 */
@@ -16,10 +17,11 @@ public class RightHandSolver {
 	static final char SOUTH='v';
 	static final char WEST='<';
 	
-	//Variables for keeping up with the Direction
+	//Variables for keeping up with the Direction and Position
 	static final char[] direction = {NORTH, EAST, SOUTH, WEST};
 	static int directionIndex=1;
 	static char forwardDirection = direction [directionIndex];
+	static Point startingPoint = new Point();
 	
 	//Variables for printing the maze
 	static final char BB8 = 'B';
@@ -54,9 +56,9 @@ public class RightHandSolver {
 	
 	//GUI
 	static Gui window = new Gui();
-	static Point startingPoint = new Point();
 	static boolean windowMode = false;
 
+	
 	public static void main (String[] args) {
 		
 		System.out.println("DAS LABYRINTH");
@@ -75,7 +77,7 @@ public class RightHandSolver {
 		
 		while(userInputInt != PREDEFINED_MODE && userInputInt != RANDOM_MODE) {
 			System.out.println("Bitte gebe eine valide Zahl ein!");
-			System.out.println("(1) Waehle entweder eines von 	rei vorgefertigen Labyrinthen aus...");
+			System.out.println("(1) Waehle entweder eines von "+MAZE_COUNT+" vorgefertigen Labyrinthen aus...");
 			System.out.println("(2) ...oder lasse eins zufaellig generieren!\n");
 			System.out.print("Was ist deine Wahl?: ");
 			userInputInt = StaticScanner.nextInt();
@@ -88,7 +90,6 @@ public class RightHandSolver {
 				System.out.println("Gebe "+i+" ein, fuer dieses Labyrinth: ");
 				printMaze(selectMap(i));
 			}
-			
 			System.out.print("Welches Labyrinth moechtest du auswaehlen?: ");
 			userInputInt = StaticScanner.nextInt();
 			
@@ -97,68 +98,54 @@ public class RightHandSolver {
 				System.out.print("Welches Labyrinth moechtest du auswaehlen?: ");
 				userInputInt = StaticScanner.nextInt();
 			}
-			
 			selectedMaze = deepCopyArray(selectMap(userInputInt));
 			System.out.println("Du hast Labyrinth "+userInputInt+" ausgewaehlt!");
-			
 		}else {
 			//Random Maze Generation with size given by User
-		System.out.println("\n### HINWEIS: am besten sehen Labyrinthe mit ungerade groessen aus ###");
-		System.out.print("Welche groesse soll das zufaellig generierte Labyrinth haben? (5-50): ");
-		userInputInt = StaticScanner.nextInt();
-		
-		while(userInputInt<5 || userInputInt>50) {
-			System.out.println("\nZu grosse Labyrinthe koennen je nach Leistung zu problemen fuehren.");
-			System.out.println("Zu kleine Labyrinthe koennen nicht generiert werden.");
-			System.out.print("Waehle eine groesse zwischen 5 und 50: ");
+			System.out.println("\n### HINWEIS: am besten sehen Labyrinthe mit ungerade groessen aus ###");
+			System.out.print("Welche groesse soll das zufaellig generierte Labyrinth haben? (5-50): ");
 			userInputInt = StaticScanner.nextInt();
-		}
+		
+			while(userInputInt<5 || userInputInt>50) {
+				System.out.println("\nZu grosse Labyrinthe koennen je nach Leistung zu problemen fuehren.");
+				System.out.println("Zu kleine Labyrinthe koennen nicht generiert werden.");
+				System.out.print("Waehle eine groesse zwischen 5 und 50: ");
+				userInputInt = StaticScanner.nextInt();
+			}
 			selectedMaze = deepCopyArray(MazeGenerator.generateMaze(userInputInt, CORRIDOR, WALL, BB8, R2D2));
 		}
-		
 		createTraceMap();
 		startingPoint = new Point(findStartingPoint(selectedMaze)[0],findStartingPoint(selectedMaze)[1]);
 		
-		
 		System.out.print("\nMoechtest Du das Programm im Debug Modus laufen lassen? (Y/N): ");
 		userInputChar = Character.toLowerCase(StaticScanner.nextChar());
-		
 		
 		while(userInputChar != INPUT_YES && userInputChar != INPUT_NO) {
 			System.out.println("Bitte gebe nur Y fuer Ja und N fuer Nein ein!");
 			System.out.println("Moechtest Du das Programm im Debug-Modus laufen lassen? (Y/N): ");
 			userInputChar = Character.toLowerCase(StaticScanner.nextChar());
 		}
-		
 		if(userInputChar == INPUT_YES) {
 			debug = true;
 			System.out.println("Okay, der Debug-Modus ist aktiviert!");
 			delay = delay*2;
 		}
-		
-		
 		System.out.print("\nMoechtest Du das Labyrinth zusätzlich im Fenster sehen (Y/N): ");
 		userInputChar = Character.toLowerCase(StaticScanner.nextChar());
-		
 		
 		while(userInputChar != INPUT_YES && userInputChar != INPUT_NO) {
 			System.out.println("Bitte gebe nur Y fuer Ja und N fuer Nein ein!");
 			System.out.println("Moechtest Du das Labyrinth zusätzlich im Fenster sehen (Y/N): ");
 			userInputChar = Character.toLowerCase(StaticScanner.nextChar());
 		}
-		
 		if(userInputChar == INPUT_YES) {
 			windowMode = true;
 			System.out.println("Okay, der Fenster-Modus ist aktiviert!");
 		}
-		
-		startTime = System.currentTimeMillis();
-
-		
 		if(windowMode) {
 			window.open(selectedMaze[0].length, selectedMaze.length);
 		}
-		
+		startTime = System.currentTimeMillis();
 		solveMaze(startingPoint);
 	}
 	/**
@@ -171,8 +158,9 @@ public class RightHandSolver {
 		stepCounter++;
 
 		wait(delay);
+		
 		if(windowMode) {
-			//repaint the Window Graphics
+			//repaint the Gui Graphics
 			window.repaint();	
 		}
 		
@@ -189,7 +177,7 @@ public class RightHandSolver {
 			Gui.done=true;
 			window.repaint();
 			escaped();
-		}else {
+		}else{
 			selectedMaze[p.y][p.x] = BB8;  
 			clearConsole();
 			printMaze(selectedMaze);
@@ -484,6 +472,9 @@ public class RightHandSolver {
 		System.out.println("\n===================================================");
 		System.out.println("\nBB8 hat zu R2D2 gefunden!!!");
 		System.out.println("Dafuer hat er "+stepCounter+" Schritte benötigt!");
+		if(debug) {
+			System.out.println("Solving time: "+algorithmTime+" ms");
+		}
 		System.out.println("\nDas hier war sein Weg:\n");
 		printMaze(traceMap);
 		wait(500);
